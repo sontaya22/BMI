@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>โปรแกรมคำนวณ BMI</title>
+    <style>
+        body { font-family: 'Tahoma', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f6f9; margin: 0; }
+        .container { background: #ffffff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 320px; }
+        h2 { text-align: center; color: #333; margin-top: 0; }
+        .input-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #555; font-size: 14px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        button:hover { background-color: #0056b3; }
+        .result { margin-top: 20px; padding: 15px; background: #e9ecef; border-radius: 6px; text-align: center; display: none; }
+        .result p { margin: 5px 0; color: #333; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>คำนวณค่า BMI</h2>
+    
+    <div class="input-group">
+        <label for="weight">น้ำหนัก (กิโลกรัม)</label>
+        <input type="number" id="weight" placeholder="เช่น 65" min="1">
+    </div>
+    
+    <div class="input-group">
+        <label for="height">ส่วนสูง (เซนติเมตร)</label>
+        <input type="number" id="height" placeholder="เช่น 170" min="1">
+    </div>
+    
+    <button onclick="calculateBMI()">คำนวณผล</button>
+
+    <div class="result" id="resultBlock">
+        <p>ค่า BMI ของคุณ: <strong id="bmiValue">-</strong></p>
+        <p>ผลการประเมิน: <strong id="bmiCategory">-</strong></p>
+    </div>
+</div>
+
+<script>
+function calculateBMI() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const heightCm = parseFloat(document.getElementById('height').value);
+    const resultBlock = document.getElementById('resultBlock');
+
+    if (!weight || !heightCm || weight <= 0 || heightCm <= 0) {
+        alert('กรุณากรอกน้ำหนักและส่วนสูงให้ถูกต้อง');
+        return;
+    }
+
+    const heightM = heightCm / 100;
+    const bmi = weight / (heightM * heightM);
+    let category = '';
+
+    if (bmi < 18.5) {
+        category = 'น้ำหนักน้อย / ผอม';
+    } else if (bmi < 23.0) {
+        category = 'ปกติ (สุขภาพดี)';
+    } else if (bmi < 25.0) {
+        category = 'ท้วม / น้ำหนักเกิน';
+    } else if (bmi < 30.0) {
+        category = 'อ้วนระดับ 1';
+    } else {
+        category = 'อ้วนระดับ 2 (อ้วนมาก)';
+    }
+
+    document.getElementById('bmiValue').innerText = bmi.toFixed(2);
+    document.getElementById('bmiCategory').innerText = category;
+    resultBlock.style.display = 'block';
+}
+</script>
+
+</body>
+  </html>
+  
